@@ -1,0 +1,25 @@
+# Build output
+.gradle/
+build/
+app/build/
+*.apk
+*.aab
+captures/
+.externalNativeBuild/
+.cxx/
+
+# IDE
+.idea/
+*.iml
+.DS_Store
+
+# Secrets — never commit these
+local.properties
+*.jks
+*.keystore
+keystore.properties
+.env
+.env.*
+!.env.example
+supabase/.temp/
+supabase/.branches/
