@@ -165,12 +165,14 @@ private fun Group(title: String) {
 @Composable
 private fun SettingRow(icon: ImageVector, title: String, subtitle: String?, danger: Boolean = false, onClick: (() -> Unit)?) {
     val color = if (danger) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
+    val trailing: (@Composable () -> Unit)? =
+        if (onClick != null) ({ Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight, null) }) else null
     val content: @Composable () -> Unit = {
         ListItem(
             headlineContent = { Text(title, color = color) },
             supportingContent = subtitle?.let { { Text(it) } },
             leadingContent = { Icon(icon, null, tint = if (danger) color else MaterialTheme.colorScheme.onSurfaceVariant) },
-            trailingContent = if (onClick != null) { { Icon(Icons.AutoMirrored.Outlined.KeyboardArrowRight, null) } } else null,
+            trailingContent = trailing,
             colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.background),
         )
     }
