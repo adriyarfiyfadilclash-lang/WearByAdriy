@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -361,8 +363,8 @@ fun ScreenScaffold(
         bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
         containerColor = MaterialTheme.colorScheme.background,
-        contentWindowInsets = if (isTab) androidx.compose.foundation.layout.WindowInsets(0, 0, 0, 0)
-            else androidx.compose.foundation.layout.WindowInsets.navigationBars,
+        contentWindowInsets = if (isTab) WindowInsets(0, 0, 0, 0)
+            else WindowInsets.navigationBars,
         content = content,
     )
 }

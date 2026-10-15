@@ -73,12 +73,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p /tmp/logs
-          for f in test.log build.log; do [ -f "$f" ] && grep -E "^e: |error:|FAILURE|What went wrong|> " "$f" | head -300 > /tmp/logs/$f.errors || true; [ -f "$f" ] && tail -200 "$f" > /tmp/logs/$f.tail || true; done
-          git config user.name "ci-bot"; git config user.email "ci-bot@users.noreply.github.com"
-          git fetch origin ci-logs || true
-          git checkout --orphan ci-logs-tmp
-          git rm -rf . -q || true
-          cp /tmp/logs/* . 2>/dev/null || true
+          for f in test.log build.log; do [ -f "$f" ] && grep -E "^e: |error:|What went wrong|FAILED" "$f" | head -300 > /tmp/logs/$f.errors || true; [ -f "$f" ] && tail -200 "$f" > /tmp/logs/$f.tail || true; done
+          cd /tmp/logs
           echo "$GITHUB_SHA" > commit.txt
+          git init -q -b ci-logs
+          git config user.name "ci-bot"; git config user.email "ci-bot@users.noreply.github.com"
           git add -A && git commit -qm "CI failure log for ${GITHUB_SHA::7}"
-          git push -f origin ci-logs-tmp:ci-logs
+          git push -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ci-logs
